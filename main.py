@@ -39,7 +39,6 @@ def GenText(mode = ""):
                     x += 0x20
                 if not dark(image[i+3][j+1]):
                     x += 0x80
-                print(chr(x))
                 textimage += chr(x)
                 j += 2
             textimage += "\n"
