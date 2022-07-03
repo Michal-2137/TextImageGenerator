@@ -16,19 +16,20 @@ def GenText(mode = ""):
             return False
 
 
-    # work in progress
-    # if mode == "hd":
-    #     i = 0
-    #     while i < len(image):
-    #             j = 0
-    #             while j < len(image[0]):
-    #                 if dark(image[i][j]):
+    #work in progress
+    if mode == "hd":
+        i = 0
+        while i < len(image):
+            j = 0
+            while j < len(image[0]):
+                if dark(image[i][j]):
+                    pass
 
 
-    if True:
+    else:
         for i in range(len(image)):
             for j in range(len(image[0])):
-                pixelColor = dark(image[i][j])
+                pixelColor = np.average(image[i][j])
                 if mode == "hdr":
                     if pixelColor < 28:
                         textimage += u"\u2800"
@@ -49,7 +50,7 @@ def GenText(mode = ""):
                     else:
                         textimage += u"\u28ff"
                 else:
-                    if pixelColor < 128:
+                    if  dark(pixelColor):
                         textimage += "1"
                     else:
                         textimage += "0"
