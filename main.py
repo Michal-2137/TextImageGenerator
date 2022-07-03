@@ -22,8 +22,27 @@ def GenText(mode = ""):
         while i < len(image):
             j = 0
             while j < len(image[0]):
+                x = 0x2800
                 if dark(image[i][j]):
-                    pass
+                    x += 0x1
+                if dark(image[i+1][j]):
+                    x += 0x2
+                if dark(image[i+2][j]):
+                    x += 0x4
+                if dark(image[i+3][j]):
+                    x += 0x40
+                if dark(image[i][j+1]):
+                    x += 0x8
+                if dark(image[i]+1[j+1]):
+                    x += 0x10
+                if dark(image[i+2][j+1]):
+                    x += 0x20
+                if dark(image[i+3][j+1]):
+                    x += 0x80
+                textimage += chr(x)
+                j += 2
+            i += 4
+
 
 
     else:
