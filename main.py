@@ -7,7 +7,7 @@ def GenText(mode = ""):
         return "only mode hd, hdr and default are available"
 
     textimage = ""
-    image = np.asarray(Image.open("image/test.png"))
+    image = np.asarray(Image.open("image/small_img.png"))
 
     def dark(color):
         if np.average(color) < 128:
@@ -23,21 +23,21 @@ def GenText(mode = ""):
             j = 0
             while j < len(image[0]):
                 x = 0x2800
-                if dark(image[i][j]):
+                if not dark(image[i][j]):
                     x += 0x1
-                if dark(image[i+1][j]):
+                if not dark(image[i+1][j]):
                     x += 0x2
-                if dark(image[i+2][j]):
+                if not dark(image[i+2][j]):
                     x += 0x4
-                if dark(image[i+3][j]):
+                if not dark(image[i+3][j]):
                     x += 0x40
-                if dark(image[i][j+1]):
+                if not dark(image[i][j+1]):
                     x += 0x8
-                if dark(image[i+1][j+1]):
+                if not dark(image[i+1][j+1]):
                     x += 0x10
-                if dark(image[i+2][j+1]):
+                if not dark(image[i+2][j+1]):
                     x += 0x20
-                if dark(image[i+3][j+1]):
+                if not dark(image[i+3][j+1]):
                     x += 0x80
                 print(chr(x))
                 textimage += chr(x)
