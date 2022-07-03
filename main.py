@@ -33,7 +33,7 @@ def GenText(mode = ""):
                     x += 0x40
                 if dark(image[i][j+1]):
                     x += 0x8
-                if dark(image[i]+1[j+1]):
+                if dark(image[i+1][j+1]):
                     x += 0x10
                 if dark(image[i+2][j+1]):
                     x += 0x20
