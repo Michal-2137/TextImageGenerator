@@ -7,7 +7,7 @@ def GenText(mode = ""):
         return "only mode hd, hdr and default are available"
 
     textimage = ""
-    image = np.asarray(Image.open("image/small_img.png"))
+    image = np.asarray(Image.open("image/small_test.png"))
 
     def dark(color):
         if np.average(color) < 128:
