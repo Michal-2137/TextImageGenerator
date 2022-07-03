@@ -39,12 +39,11 @@ def GenText(mode = ""):
                     x += 0x20
                 if dark(image[i+3][j+1]):
                     x += 0x80
+                print(chr(x))
                 textimage += chr(x)
                 j += 2
+            textimage += "\n"
             i += 4
-
-
-
     else:
         for i in range(len(image)):
             for j in range(len(image[0])):
@@ -69,10 +68,12 @@ def GenText(mode = ""):
                     else:
                         textimage += u"\u28ff"
                 else:
-                    if  dark(pixelColor):
+                    if dark(pixelColor):
                         textimage += "1"
                     else:
                         textimage += "0"
             textimage += "\n"
     return textimage
+
+
 print(GenText("hd"))
