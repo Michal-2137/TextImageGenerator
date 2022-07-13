@@ -1,13 +1,35 @@
 from PIL import Image
 import numpy as np
 
-def GenText(mode = ""):
+def GenText(filename, mode = ""):
 
     if mode != "" and mode != "hd" and mode != "hdr":
         return "only mode hd, hdr and default are available"
-
     textimage = ""
-    image = np.asarray(Image.open("image/small_test.png"))
+    if mode == "hd":
+        size = 16000
+    else:
+        size = 2000
+
+
+    W = Image.open(f"image/{filename}").width
+    H = Image.open(f"image/{filename}").height
+    newW = 0
+    newH = 0
+    ratio = W/H
+    while newW*newH <= size:
+        W = newW
+        H = newH
+        newW += 1
+        newH += ratio
+    W -= W%2
+    H -= H%4
+    H = int(H)
+
+    imageRaw = Image.open(f"image/{filename}").resize((W, H))
+    image = np.asarray(imageRaw)
+
+
 
     def dark(color):
         if np.average(color) < 128:
@@ -75,4 +97,4 @@ def GenText(mode = ""):
     return textimage
 
 
-print(GenText("hd"))
+print(GenText("test.png", "hd"))
