@@ -61,7 +61,11 @@ def GenText(filename, mode = ""):
                     x += 0x20
                 if not dark(image[i+3][j+1]):
                     x += 0x80
-                textimage += chr(x)
+                if x == 0x2800:
+                    for x in range(3):
+                        textimage += chr(0x2005)
+                else:
+                    textimage += chr(x)
                 j += 2
             textimage += "\n"
             i += 4
