@@ -26,7 +26,7 @@ def GenText(filename, mode = ""):
     H -= H%4
     H = int(H)
 
-    imageRaw = Image.open(f"image/{filename}").resize((W, H))
+    imageRaw = Image.open(f"image/{filename}").resize((W, H), resample=PIL.Image.Resampling.NEAREST)
     if mode != "hdr":
         imageRaw = imageRaw.convert("1", dither=PIL.Image.Dither.NONE)
     image = np.asarray(imageRaw)
@@ -123,4 +123,4 @@ def GenText(filename, mode = ""):
     return textimage
 
 
-print(GenText("test2.jpg", "hd"))
+print(GenText("test.png", "hd"))
