@@ -38,7 +38,6 @@ def GenText(filename, mode = ""):
             return False
 
 
-    #work in progress
     if mode == "hd":
         i = 0
         while i < len(image):
@@ -98,6 +97,13 @@ def GenText(filename, mode = ""):
                     else:
                         textimage += "0"
             textimage += "\n"
+
+    if len(textimage) > size:
+        rm = W
+        if mode == "hd":
+            rm *= 2
+        for x in range(rm):
+            textimage = textimage[:-1]
     return textimage
 
 
