@@ -1,3 +1,4 @@
+import PIL
 from PIL import Image
 import numpy as np
 
@@ -10,7 +11,6 @@ def GenText(filename, mode = ""):
         size = 16000
     else:
         size = 2000
-
 
     W = Image.open(f"image/{filename}").width
     H = Image.open(f"image/{filename}").height
@@ -28,13 +28,27 @@ def GenText(filename, mode = ""):
 
     imageRaw = Image.open(f"image/{filename}").resize((W, H))
     if mode != "hdr":
-        imageRaw = imageRaw.convert("1")
+        imageRaw = imageRaw.convert("1", dither=PIL.Image.Dither.NONE)
     image = np.asarray(imageRaw)
+    if mode != "hdr":
+        n0 = 0
+        n1 = 0
+        for pixel in image:
+            if pixel[0] == 0:
+                n0 += 1
+            else:
+                n1 += 1
+        if n0 > n1:
+            dot = 0
+        else:
+            dot = 1
+
+
 
 
 
     def DotHere(pixel):
-        if pixel:
+        if pixel == dot:
             return True
         else:
             return False
@@ -63,8 +77,8 @@ def GenText(filename, mode = ""):
                 if DotHere(image[i+3][j+1]):
                     x += 0x80
                 if x == 0x2800:
-                    for x in range(3):
-                        textimage += chr(0x2005)
+                    textimage += chr(0x2002)
+                    textimage += chr(0x2005)
                 else:
                     textimage += chr(x)
                 j += 2
@@ -109,4 +123,4 @@ def GenText(filename, mode = ""):
     return textimage
 
 
-print(GenText("test.png", "hd"))
+print(GenText("test2.jpg", "hd"))
