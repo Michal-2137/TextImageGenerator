@@ -27,12 +27,14 @@ def GenText(filename, mode = ""):
     H = int(H)
 
     imageRaw = Image.open(f"image/{filename}").resize((W, H))
+    if mode != "hdr":
+        imageRaw = imageRaw.convert("1")
     image = np.asarray(imageRaw)
 
 
 
-    def dark(color):
-        if np.average(color) < 128:
+    def DotHere(pixel):
+        if pixel:
             return True
         else:
             return False
@@ -44,21 +46,21 @@ def GenText(filename, mode = ""):
             j = 0
             while j < len(image[0]):
                 x = 0x2800
-                if not dark(image[i][j]):
+                if DotHere(image[i][j]):
                     x += 0x1
-                if not dark(image[i+1][j]):
+                if DotHere(image[i+1][j]):
                     x += 0x2
-                if not dark(image[i+2][j]):
+                if DotHere(image[i+2][j]):
                     x += 0x4
-                if not dark(image[i+3][j]):
+                if DotHere(image[i+3][j]):
                     x += 0x40
-                if not dark(image[i][j+1]):
+                if DotHere(image[i][j+1]):
                     x += 0x8
-                if not dark(image[i+1][j+1]):
+                if DotHere(image[i+1][j+1]):
                     x += 0x10
-                if not dark(image[i+2][j+1]):
+                if DotHere(image[i+2][j+1]):
                     x += 0x20
-                if not dark(image[i+3][j+1]):
+                if DotHere(image[i+3][j+1]):
                     x += 0x80
                 if x == 0x2800:
                     for x in range(3):
@@ -92,7 +94,7 @@ def GenText(filename, mode = ""):
                     else:
                         textimage += u"\u28ff"
                 else:
-                    if dark(pixelColor):
+                    if image[i][j] < 1:
                         textimage += "1"
                     else:
                         textimage += "0"
